@@ -9,11 +9,13 @@ namespace CarInsuranceTgBot.Services;
 public class OpenAiService : IOpenAiService
 {
     private readonly HttpClient _httpClient;
+    
+    // потрібно брати з секретів а не з appsettings
     private readonly string _aiApiKey;
     public OpenAiService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _httpClient = httpClientFactory.CreateClient("OpenAI");
-        _aiApiKey = configuration["OpenAi:OpenAiApiKey"] ?? throw new InvalidOperationException("OpenAiApiKey не знайдено в конфігурації.");
+        _aiApiKey = configuration["OpenAI:ApiKey"] ?? throw new InvalidOperationException("OpenAiApiKey не знайдено в конфігурації.");
     }
 
     public async Task<string> AskAsync(string prompt, CancellationToken cancellationToken = default)
